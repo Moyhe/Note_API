@@ -92,4 +92,20 @@ class NoteController extends BaseController
 
         return $this->sendResponse(new NoteResource($note), 'Note updated successfullu');
     }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $note = Note::find($id);
+
+        if (is_null($note)) {
+            return $this->sendError('Note was note found');
+        }
+
+        $note->delete();
+
+        return $this->sendResponse(new NoteResource($note), 'Note Deleted successfullu');
+    }
 }
