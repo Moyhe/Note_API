@@ -56,4 +56,19 @@ class NoteController extends BaseController
         $notes = Note::create($data);
         return $this->sendResponse(new NoteResource($notes), 'Note Created Successfully');
     }
+
+    /**
+     * Display the specified resource.
+     */
+
+    public function show(string $id)
+    {
+        $note = Note::find($id);
+
+        if (is_null($note)) {
+            return $this->sendError('Note was note found');
+        }
+
+        return $this->sendResponse(new NoteResource($note), 'Note Found successfully');
+    }
 }
