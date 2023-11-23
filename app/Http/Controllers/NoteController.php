@@ -6,7 +6,7 @@ use App\Http\Resources\NoteResource;
 use App\Models\Note;
 use Illuminate\Http\Request;
 
-class NoteController extends Controller
+class NoteController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -21,5 +21,17 @@ class NoteController extends Controller
         }
 
         return $this->sendResponse(NoteResource::collection($notes), 'notes was retreived successfully');
+    }
+
+
+    public function usersNote(Note $note, string $id)
+    {
+        $this->authorize('view', $note);
+
+        $notes = Note::query()->where('user_id', $id)->get();
+        return $this->sendResponse(
+            NoteResource::collection($notes),
+            'Notes was Retrieved Successfully'
+        );
     }
 }
