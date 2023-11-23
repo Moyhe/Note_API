@@ -1,4 +1,4 @@
-## Laravel 10 authentication RESTFUL API with jwt and docker
+## Laravel 10 Note Managment RESTFUL API with docker and mysql
 
 You have to register first in order to generate access token and make API requests.
 
