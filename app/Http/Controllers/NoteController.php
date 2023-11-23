@@ -71,4 +71,25 @@ class NoteController extends BaseController
 
         return $this->sendResponse(new NoteResource($note), 'Note Found successfully');
     }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Note $note)
+    {
+        $data = $request->all();
+        $validator = Validator::make($data, [
+
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validattion Error', $validator->errors());
+        }
+
+        $note->update($data);
+
+        return $this->sendResponse(new NoteResource($note), 'Note updated successfullu');
+    }
 }
