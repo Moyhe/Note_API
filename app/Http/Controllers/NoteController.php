@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\NoteResource;
 use App\Models\Note;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class NoteController extends BaseController
 {
@@ -33,5 +34,26 @@ class NoteController extends BaseController
             NoteResource::collection($notes),
             'Notes was Retrieved Successfully'
         );
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $data = $request->all();
+        $validator = Validator::make($data, [
+
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validattion Error', $validator->errors());
+        }
+
+        $data['user_id'] = auth()->user()->id;
+        $notes = Note::create($data);
+        return $this->sendResponse(new NoteResource($notes), 'Note Created Successfully');
     }
 }
