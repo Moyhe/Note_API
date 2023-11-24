@@ -78,8 +78,8 @@ class NoteTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json',
-        ])->postJson(route('update.note', ['note' => $note->id]), [
-            'title' => 'work',
+        ])->putJson(route('update.note', ['note' => $note->id]), [
+            "title" => "work",
         ]);
 
         $response->assertStatus(200);
@@ -93,7 +93,6 @@ class NoteTest extends TestCase
             "content" => "how to management"
         ]);
 
-        $note->save();
 
         $token = $this->authenticate();
         $response = $this->withHeaders([
@@ -116,7 +115,7 @@ class NoteTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json',
-        ])->postJson(route('delete.note', ['note' => $note->id]));
+        ])->deleteJson(route('delete.note', ['note' => $note->id]));
 
         $response->assertStatus(200);
         $this->assertEquals(0, $note->count());
