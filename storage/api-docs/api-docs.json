@@ -1,0 +1,309 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "User registration API",
+        "description": "This is an example API for Note Management",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/notes/": {
+            "get": {
+                "tags": [
+                    "notes"
+                ],
+                "summary": "List Notes",
+                "description": "Returns a list Notes",
+                "operationId": "list_Notes",
+                "responses": {
+                    "200": {
+                        "description": "List of Notes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "title": {
+                                            "description": "Note Title",
+                                            "type": "string",
+                                            "example": "work",
+                                            "nullable": "false"
+                                        },
+                                        "content": {
+                                            "description": "content description",
+                                            "type": "string",
+                                            "example": "how to manage you time",
+                                            "nullable": "false"
+                                        },
+                                        "user_id": {
+                                            "description": "user id",
+                                            "type": "string",
+                                            "example": "1",
+                                            "nullable": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/notes/user/{user}": {
+            "get": {
+                "tags": [
+                    "notes"
+                ],
+                "summary": "List Notes of users",
+                "description": "Returns a list Notes of a user",
+                "operationId": "list_Notes_of_user",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Note ID",
+                        "required": true,
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of Notes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "title": {
+                                            "description": "Note Title",
+                                            "type": "string",
+                                            "example": "work",
+                                            "nullable": "false"
+                                        },
+                                        "content": {
+                                            "description": "content description",
+                                            "type": "string",
+                                            "example": "how to manage you time",
+                                            "nullable": "false"
+                                        },
+                                        "user_id": {
+                                            "description": "user id",
+                                            "type": "string",
+                                            "example": "1",
+                                            "nullable": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/notes": {
+            "post": {
+                "tags": [
+                    "notes"
+                ],
+                "summary": "create a note",
+                "description": "crate a note ",
+                "operationId": "store",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Authentication successful"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/notes/{note}": {
+            "get": {
+                "tags": [
+                    "notes"
+                ],
+                "summary": "List one Note",
+                "description": "Returns one note",
+                "operationId": "list_one_Note",
+                "parameters": [
+                    {
+                        "name": "note",
+                        "in": "path",
+                        "description": "Note ID",
+                        "required": true,
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "list on note",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "title": {
+                                            "description": "Note Title",
+                                            "type": "string",
+                                            "example": "work",
+                                            "nullable": "false"
+                                        },
+                                        "content": {
+                                            "description": "content description",
+                                            "type": "string",
+                                            "example": "how to manage you time",
+                                            "nullable": "false"
+                                        },
+                                        "user_id": {
+                                            "description": "user id",
+                                            "type": "string",
+                                            "example": "1",
+                                            "nullable": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "notes"
+                ],
+                "summary": "upate a note",
+                "description": "update a note ",
+                "operationId": "update_note",
+                "parameters": [
+                    {
+                        "name": "note",
+                        "in": "path",
+                        "description": "Note ID",
+                        "required": true,
+                        "example": "1"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Authentication successful"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "notes"
+                ],
+                "summary": "upate a note",
+                "description": "update a note ",
+                "operationId": "Delete_note",
+                "parameters": [
+                    {
+                        "name": "note",
+                        "in": "path",
+                        "description": "Note ID",
+                        "required": true,
+                        "example": "1"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeleteRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Authentication successful"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "StoreRequest": {
+                "properties": {
+                    "title": {
+                        "description": "Note Title",
+                        "type": "string",
+                        "example": "work",
+                        "nullable": "false"
+                    },
+                    "content": {
+                        "description": "content description",
+                        "type": "string",
+                        "example": "how to manage you time",
+                        "nullable": "false"
+                    },
+                    "user_id": {
+                        "description": "user id",
+                        "type": "string",
+                        "example": "1",
+                        "nullable": "true"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateRequest": {
+                "properties": {
+                    "title": {
+                        "description": "Note Title",
+                        "type": "string",
+                        "example": "work",
+                        "nullable": "false"
+                    },
+                    "content": {
+                        "description": "content description",
+                        "type": "string",
+                        "example": "how to manage you time",
+                        "nullable": "false"
+                    },
+                    "user_id": {
+                        "description": "user id",
+                        "type": "string",
+                        "example": "1",
+                        "nullable": "true"
+                    }
+                },
+                "type": "object"
+            },
+            "DeleteRequest": {}
+        }
+    }
+}

@@ -5,25 +5,117 @@ namespace App\Http\Controllers;
 use App\Http\Resources\NoteResource;
 use App\Models\Note;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class NoteController extends BaseController
 {
+
     /**
-     * Display a listing of the resource.
+     *
+     * @OA\Get(
+     *     path="/api/notes/",
+     *     tags={"notes"},
+     *     summary="List Notes",
+     *     operationId="list_Notes",
+     *     description="Returns a list Notes",
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of Notes",
+     *
+     *           @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="title",
+     *                  description="Note Title",
+     *                  type="string",
+     *                  nullable="false",
+     *                  example="work"
+     *              ),
+     *              @OA\Property(
+     *                  property="content",
+     *                  description="content description",
+     *                  type="string",
+     *                  nullable="false",
+     *                  example="how to manage you time"
+     *              ),
+     *              @OA\Property(
+     *                  property="user_id",
+     *                  description="user id",
+     *                  type="string",
+     *                  nullable="true",
+     *                  example="1"
+     *              ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal server error"
+     *     )
+     * )
      */
     public function index()
     {
-
         $notes = Note::all();
 
         if (empty($notes)) {
             return $this->sendError('No Notes Listed yet');
         }
 
-        return $this->sendResponse(NoteResource::collection($notes), 'notes was retreived successfully');
+        return $this->sendResponse(
+            NoteResource::collection($notes),
+            'notes was retreived successfully'
+        );
     }
 
+    /**
+     *
+     * @OA\Get(
+     *     path="/api/notes/user/{user}",
+     *     tags={"notes"},
+     *     summary="List Notes of users",
+     *     operationId="list_Notes_of_user",
+     *     @OA\Parameter(
+     *         name="user",
+     *         description="Note ID",
+     *         in="path",
+     *         required=true,
+     *         example="1"
+     *     ),
+     *     description="Returns a list Notes of a user",
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of Notes",
+     *
+     *           @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="title",
+     *                  description="Note Title",
+     *                  type="string",
+     *                  nullable="false",
+     *                  example="work"
+     *              ),
+     *              @OA\Property(
+     *                  property="content",
+     *                  description="content description",
+     *                  type="string",
+     *                  nullable="false",
+     *                  example="how to manage you time"
+     *              ),
+     *              @OA\Property(
+     *                  property="user_id",
+     *                  description="user id",
+     *                  type="string",
+     *                  nullable="true",
+     *                  example="1"
+     *              ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal server error"
+     *     )
+     * )
+     */
 
     public function usersNote(Note $note, string $id)
     {
@@ -36,9 +128,54 @@ class NoteController extends BaseController
         );
     }
 
+
     /**
-     * Store a newly created resource in storage.
+     * @OA\Schema(
+     *    schema="StoreRequest",
+     *              @OA\Property(
+     *                  property="title",
+     *                  description="Note Title",
+     *                  type="string",
+     *                  nullable="false",
+     *                  example="work"
+     *              ),
+     *              @OA\Property(
+     *                  property="content",
+     *                  description="content description",
+     *                  type="string",
+     *                  nullable="false",
+     *                  example="how to manage you time"
+     *              ),
+     *              @OA\Property(
+     *                  property="user_id",
+     *                  description="user id",
+     *                  type="string",
+     *                  nullable="true",
+     *                  example="1"
+     *              ),
+     * )
+     *
+     * @OA\Post(
+     *     path="/api/notes",
+     *     tags={"notes"},
+     *     summary="create a note",
+     *     description="crate a note ",
+     *     operationId="store",
+     *     @OA\RequestBody(
+     *        @OA\JsonContent(ref="#/components/schemas/StoreRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Authentication successful",
+
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal server error"
+     *     )
+     * )
      */
+
     public function store(Request $request)
     {
         $data = $request->all();
@@ -52,18 +189,66 @@ class NoteController extends BaseController
             return $this->sendError('Validattion Error', $validator->errors());
         }
 
-        $data['user_id'] = auth()->user()->id;
+        $data['user_id'] = auth()->user()?->id;
         $notes = Note::create($data);
         return $this->sendResponse(new NoteResource($notes), 'Note Created Successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
 
-    public function show(string $id)
+    /**
+     *
+     * @OA\Get(
+     *     path="/api/notes/{note}",
+     *     tags={"notes"},
+     *     summary="List one Note",
+     *     operationId="list_one_Note",
+     *      @OA\Parameter(
+     *         name="note",
+     *         description="Note ID",
+     *         in="path",
+     *         required=true,
+     *         example="1"
+     *     ),
+     *     description="Returns one note",
+     *     @OA\Response(
+     *         response=200,
+     *         description="list on note",
+     *
+     *           @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="title",
+     *                  description="Note Title",
+     *                  type="string",
+     *                  nullable="false",
+     *                  example="work"
+     *              ),
+     *              @OA\Property(
+     *                  property="content",
+     *                  description="content description",
+     *                  type="string",
+     *                  nullable="false",
+     *                  example="how to manage you time"
+     *              ),
+     *              @OA\Property(
+     *                  property="user_id",
+     *                  description="user id",
+     *                  type="string",
+     *                  nullable="true",
+     *                  example="1"
+     *              ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal server error"
+     *     )
+     * )
+     */
+    public function show(string $note)
     {
-        $note = Note::find($id);
+        $this->authorize('view', $note);
+
+        $note = Note::find($note);
 
         if (is_null($note)) {
             return $this->sendError('Note was note found');
@@ -72,11 +257,71 @@ class NoteController extends BaseController
         return $this->sendResponse(new NoteResource($note), 'Note Found successfully');
     }
 
+
     /**
-     * Update the specified resource in storage.
+     * @OA\Schema(
+     *    schema="UpdateRequest",
+     *              @OA\Property(
+     *                  property="title",
+     *                  description="Note Title",
+     *                  type="string",
+     *                  nullable="false",
+     *                  example="work"
+     *              ),
+     *              @OA\Property(
+     *                  property="content",
+     *                  description="content description",
+     *                  type="string",
+     *                  nullable="false",
+     *                  example="how to manage you time"
+     *              ),
+     *              @OA\Property(
+     *                  property="user_id",
+     *                  description="user id",
+     *                  type="string",
+     *                  nullable="true",
+     *                  example="1"
+     *              ),
+     * )
+     *
+     * @OA\Put(
+     *     path="/api/notes/{note}",
+     *     tags={"notes"},
+     *     summary="upate a note",
+     *     description="update a note ",
+     *     operationId="update_note",
+     *     @OA\Parameter(
+     *         name="note",
+     *         description="Note ID",
+     *         in="path",
+     *         required=true,
+     *         example="1"
+     *     ),
+     *     @OA\RequestBody(
+     *        @OA\JsonContent(ref="#/components/schemas/UpdateRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Authentication successful",
+
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal server error"
+     *     )
+     * )
      */
-    public function update(Request $request, Note $note)
+
+    public function update(Request $request, string $note)
     {
+        $this->authorize('view', $note);
+
+        $note = Note::find($note);
+
+        if (is_null($note)) {
+            return $this->sendError('Note was note found');
+        }
+
         $data = $request->all();
         $validator = Validator::make($data, [
 
@@ -93,12 +338,46 @@ class NoteController extends BaseController
         return $this->sendResponse(new NoteResource($note), 'Note updated successfullu');
     }
 
+
     /**
-     * Remove the specified resource from storage.
+     * @OA\Schema(
+     *    schema="DeleteRequest",
+     * )
+     *
+     * @OA\Delete(
+     *     path="/api/notes/{note}",
+     *     tags={"notes"},
+     *     summary="upate a note",
+     *     description="update a note ",
+     *     operationId="Delete_note",
+     *     @OA\Parameter(
+     *         name="note",
+     *         description="Note ID",
+     *         in="path",
+     *         required=true,
+     *         example="1"
+     *     ),
+     *     @OA\RequestBody(
+     *        @OA\JsonContent(ref="#/components/schemas/DeleteRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Authentication successful",
+
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal server error"
+     *     )
+     * )
      */
-    public function destroy(string $id)
+
+
+    public function destroy(string $note)
     {
-        $note = Note::find($id);
+        // $this->authorize('view', $note);
+
+        $note = Note::find($note);
 
         if (is_null($note)) {
             return $this->sendError('Note was note found');
