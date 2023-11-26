@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Http\Controllers\AuthUserController;
 use App\Models\Note;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -12,8 +13,8 @@ class NotePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Note $note): bool
+    public function view(AuthUserController $user, Note $note): bool
     {
-        return $user->id == $note->user_id;
+        return $user->getUserId() == $note->user_id;
     }
 }

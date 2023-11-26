@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\NoteResource;
 use App\Models\Note;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class NoteController extends BaseController
@@ -176,8 +178,10 @@ class NoteController extends BaseController
      * )
      */
 
-    public function store(Request $request)
+    public function store(Request $request, AuthUserController $auth)
     {
+
+
         $data = $request->all();
         $validator = Validator::make($data, [
 
@@ -189,7 +193,7 @@ class NoteController extends BaseController
             return $this->sendError('Validattion Error', $validator->errors());
         }
 
-        $data['user_id'] = auth()->user()?->id;
+        $data['user_id'] = $auth->getUserId();
         $notes = Note::create($data);
         return $this->sendResponse(new NoteResource($notes), 'Note Created Successfully');
     }
@@ -347,7 +351,7 @@ class NoteController extends BaseController
      * @OA\Delete(
      *     path="/api/notes/{note}",
      *     tags={"notes"},
-     *     summary="upate a note",
+     *     summary="delete a note",
      *     description="update a note ",
      *     operationId="Delete_note",
      *     @OA\Parameter(

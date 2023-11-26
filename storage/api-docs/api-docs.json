@@ -6,6 +6,98 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/user/register": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Authorize user",
+                "description": "register user",
+                "operationId": "register",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Authentication successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "description": "JWT authorization token",
+                                            "type": "string",
+                                            "example": "1|fSPJ2AR0TU0dLB6aiYgtSGHkPnFTfBdh4ltISiSo"
+                                        },
+                                        "type": {
+                                            "description": "Token type",
+                                            "type": "string",
+                                            "example": "bearer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/user/login": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Authorize user",
+                "description": "Authorizes user by its email and password",
+                "operationId": "login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Authentication successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "description": "Sanctum authorization token",
+                                            "type": "string",
+                                            "example": "1|fSPJ2AR0TU0dLB6aiYgtSGHkPnFTfBdh4ltISiSo"
+                                        },
+                                        "type": {
+                                            "description": "Token type",
+                                            "type": "string",
+                                            "example": "bearer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
         "/api/notes/": {
             "get": {
                 "tags": [
@@ -223,7 +315,7 @@
                 "tags": [
                     "notes"
                 ],
-                "summary": "upate a note",
+                "summary": "delete a note",
                 "description": "update a note ",
                 "operationId": "Delete_note",
                 "parameters": [
@@ -257,6 +349,45 @@
     },
     "components": {
         "schemas": {
+            "RegisterRequest": {
+                "properties": {
+                    "name": {
+                        "description": "User Name",
+                        "type": "string",
+                        "nullable": false
+                    },
+                    "email": {
+                        "description": "User EMail",
+                        "type": "string",
+                        "format": "email",
+                        "nullable": false
+                    },
+                    "password": {
+                        "description": "User Password",
+                        "type": "string",
+                        "example": "password",
+                        "nullable": false
+                    }
+                },
+                "type": "object"
+            },
+            "LoginRequest": {
+                "properties": {
+                    "email": {
+                        "description": "User EMail",
+                        "type": "string",
+                        "format": "email",
+                        "nullable": false
+                    },
+                    "password": {
+                        "description": "User Password",
+                        "type": "string",
+                        "example": "password",
+                        "nullable": false
+                    }
+                },
+                "type": "object"
+            },
             "StoreRequest": {
                 "properties": {
                     "title": {
@@ -304,6 +435,14 @@
                 "type": "object"
             },
             "DeleteRequest": {}
+        },
+        "securitySchemes": {
+            "jwt": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
         }
     }
 }

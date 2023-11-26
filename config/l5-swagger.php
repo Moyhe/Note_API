@@ -153,6 +153,13 @@ return [
         */
         'securityDefinitions' => [
             'securitySchemes' => [
+
+                "jwt" => [
+                    "type" => "apiKey",
+                    "description" => "Enter token in format (Bearer <token>)",
+                    "name" => "Authorization",
+                    "in" => "header",
+                ],
                 /*
                  * Examples of Security schemes
                 */
@@ -211,8 +218,7 @@ return [
                     ],
 
                     'passport' => []
-                    */
-                ],
+                    */],
             ],
         ],
 
