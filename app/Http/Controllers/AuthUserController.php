@@ -151,10 +151,8 @@ class AuthUserController extends Controller
     {
         $token = $this->login();
 
-        $response = Http::withHeaders([
+        return Http::withHeaders([
             'Authorization' => 'Bearer ' . $token,
         ])->get('http://host.docker.internal:81/api/users')->json()['id'];
-
-        return $response;
     }
 }

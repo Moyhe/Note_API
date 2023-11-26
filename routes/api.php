@@ -38,3 +38,14 @@ Route::middleware('auth:api')->group(function () {
 
     // Route::get('/notes/user/{id}', [NoteController::class, 'usersNote'])->name('user.all');
 });
+
+
+// Route::apiResource('/notes', NoteController::class);
+
+// Route::get('notes', [NoteController::class, 'index'])->name('notes.all');
+// Route::put('update/{note}', [NoteController::class, 'update'])->name('update.note');
+// Route::post('create', [NoteController::class, 'store'])->name('create.note');
+// Route::delete('delete/{note}', [NoteController::class, 'destroy'])->name('delete.note');
+// Route::get('show/{note}', [NoteController::class, 'show'])->name('show.note');
+
+// Route::get('/notes/user/{id}', [NoteController::class, 'usersNote'])->name('user.all');

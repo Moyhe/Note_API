@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\NoteResource;
 use App\Models\Note;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class NoteController extends BaseController
@@ -180,7 +177,6 @@ class NoteController extends BaseController
 
     public function store(Request $request, AuthUserController $auth)
     {
-
 
         $data = $request->all();
         $validator = Validator::make($data, [
@@ -379,7 +375,7 @@ class NoteController extends BaseController
 
     public function destroy(string $note)
     {
-        // $this->authorize('view', $note);
+        $this->authorize('view', $note);
 
         $note = Note::find($note);
 
