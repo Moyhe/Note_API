@@ -129,7 +129,7 @@
                                             "description": "user id",
                                             "type": "string",
                                             "example": "1",
-                                            "nullable": "true"
+                                            "nullable": "false"
                                         }
                                     },
                                     "type": "object"
@@ -183,7 +183,7 @@
                                             "description": "user id",
                                             "type": "string",
                                             "example": "1",
-                                            "nullable": "true"
+                                            "nullable": "false"
                                         }
                                     },
                                     "type": "object"
@@ -264,7 +264,7 @@
                                             "description": "user id",
                                             "type": "string",
                                             "example": "1",
-                                            "nullable": "true"
+                                            "nullable": "false"
                                         }
                                     },
                                     "type": "object"
@@ -406,7 +406,7 @@
                         "description": "user id",
                         "type": "string",
                         "example": "1",
-                        "nullable": "true"
+                        "nullable": "false"
                     }
                 },
                 "type": "object"
@@ -429,7 +429,7 @@
                         "description": "user id",
                         "type": "string",
                         "example": "1",
-                        "nullable": "true"
+                        "nullable": "false"
                     }
                 },
                 "type": "object"

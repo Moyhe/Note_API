@@ -41,7 +41,7 @@ class NoteController extends BaseController
      *                  property="user_id",
      *                  description="user id",
      *                  type="string",
-     *                  nullable="true",
+     *                  nullable="false",
      *                  example="1"
      *              ),
      *         )
@@ -104,7 +104,7 @@ class NoteController extends BaseController
      *                  property="user_id",
      *                  description="user id",
      *                  type="string",
-     *                  nullable="true",
+     *                  nullable="false",
      *                  example="1"
      *              ),
      *         )
@@ -149,7 +149,7 @@ class NoteController extends BaseController
      *                  property="user_id",
      *                  description="user id",
      *                  type="string",
-     *                  nullable="true",
+     *                  nullable="false",
      *                  example="1"
      *              ),
      * )
@@ -233,7 +233,7 @@ class NoteController extends BaseController
      *                  property="user_id",
      *                  description="user id",
      *                  type="string",
-     *                  nullable="true",
+     *                  nullable="false",
      *                  example="1"
      *              ),
      *         )
@@ -279,7 +279,7 @@ class NoteController extends BaseController
      *                  property="user_id",
      *                  description="user id",
      *                  type="string",
-     *                  nullable="true",
+     *                  nullable="false",
      *                  example="1"
      *              ),
      * )
