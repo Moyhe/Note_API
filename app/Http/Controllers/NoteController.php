@@ -78,7 +78,7 @@ class NoteController extends BaseController
      *     operationId="list_Notes_of_user",
      *     @OA\Parameter(
      *         name="user",
-     *         description="Note ID",
+     *         description="User ID",
      *         in="path",
      *         required=true,
      *         example="1"

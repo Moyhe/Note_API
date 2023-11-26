@@ -155,7 +155,7 @@
                     {
                         "name": "user",
                         "in": "path",
-                        "description": "Note ID",
+                        "description": "User ID",
                         "required": true,
                         "example": "1"
                     }
